@@ -4,10 +4,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router/index'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faLock, faEyeSlash, faEye, faMehRollingEyes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faUser)
+library.add(faUser, faLock, faEyeSlash, faEye, faMehRollingEyes)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

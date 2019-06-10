@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         next();
     }
     else {
-        const token = '1';
+        const token = '';
         if (!token) {
             next('/login');
         }

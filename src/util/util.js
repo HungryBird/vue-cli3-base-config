@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
 
-export const getToken = ( name = '') => {
+export const getToken = (name = '') => {
     return Cookies.get(name || 'token');
 };
 
-export const setToken = (token, name = '', expires = 1) => {
+export const setToken = (token, expires = 1, name = '') => {
     return Cookies.set(name || 'token', token, {expires});
 }
 

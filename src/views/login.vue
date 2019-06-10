@@ -7,7 +7,7 @@
         <el-form-item prop="username">
             <span class="svg-container">
                 <!-- <svg-icon icon-class="user" /> -->
-                <!-- <font-awesome-icon :icon="['fas','user']"/> -->
+                <font-awesome-icon icon="user-secret" />
             </span>
             <el-input
                 ref="username"
@@ -167,7 +167,7 @@ export default {
                             this.loading = false
                         })
                 } else {
-                    console.log('error submit!!')
+                    window.console.log('error submit!!')
                     return false
                 }
             })

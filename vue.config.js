@@ -17,5 +17,4 @@ module.export = {
     },
     productionSourceMap: false,
     publicPath: '/',
-    
 }

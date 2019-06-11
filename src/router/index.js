@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import vueRouter from 'vue-router';
 import routes from '@/router/routes';
-import element from 'element-ui';
+import store from '@/store'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
 
-Vue.use(element);
 Vue.use(vueRouter);
+
+NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const router = new vueRouter({
     routes,
@@ -16,11 +19,13 @@ const router = new vueRouter({
 })
 
 router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
+    NProgress.start()
+
     if (to.path === '/login') {
         next();
     }
     else {
-        const token = '';
+        const token = store.getters.getToken;
         if (!token) {
             next('/login');
         }
@@ -28,6 +33,10 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
             next();
         }
     }
+})
+
+router.afterEach(() => {
+    NProgress.done()
 })
 
 export default router;

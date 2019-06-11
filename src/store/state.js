@@ -1,5 +1,7 @@
+import { getToken } from '@/util/util'
+
 const state = {
-    token: null,
+    token: getToken(),
 }
 
 export default state;

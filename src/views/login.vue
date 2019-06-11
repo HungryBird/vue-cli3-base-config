@@ -11,7 +11,7 @@
                 <el-input
                     ref="username"
                     v-model="loginForm.username"
-                    placeholder="Username"
+                    placeholder="用户名"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -28,7 +28,7 @@
                     ref="password"
                     v-model="loginForm.password"
                     :type="passwordType"
-                    placeholder="Password"
+                    placeholder="密码"
                     name="password"
                     tabindex="2"
                     autocomplete="on"
@@ -41,8 +41,11 @@
                     </span>
                 </el-form-item>
             </el-tooltip>
+            <div style="margin-bottom: 30px;text-align: left;">
+                <el-checkbox v-model="remeber" @change="toRemeber">记住密码</el-checkbox>
+            </div>
             <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
-            <el-button type="primary" style="width:100%;margin-bottom:30px;margin-left: 0 !important;" @click="showDialog=true">第三方登录</el-button>
+            <!-- <el-button type="primary" style="width:100%;margin-bottom:30px;margin-left: 0 !important;" @click="showDialog=true">第三方登录</el-button> -->
         </el-form>
         <el-dialog title="Or connect with" :visible.sync="showDialog">
             Can not be simulated on local, so please combine you own business simulation! ! !
@@ -55,34 +58,27 @@
 </template>
 
 <script>
-import { validUsername } from '@/util/util'
+import ajax from '@/api/login/index'
 import SocialSign from './components/SocialSignin'
 
 export default {
     name: 'Login',
     components: { SocialSign },
     data() {
-        const validateUsername = (rule, value, callback) => {
-            if (!validUsername(value)) {
-                callback(new Error('Please enter the correct user name'))
-            } else {
-                callback()
-            }
-        }
         const validatePassword = (rule, value, callback) => {
             if (value.length < 6) {
-                callback(new Error('The password can not be less than 6 digits'))
+                callback(new Error('密码不能小于6位'))
             } else {
                 callback()
             }
         }
         return {
             loginForm: {
-                username: 'admin',
-                password: '111111'
+                username: '',
+                password: ''
             },
             loginRules: {
-                username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+                username: [{ required: true, trigger: 'blur', message: '账号不能为空' }],
                 password: [{ required: true, trigger: 'blur', validator: validatePassword }]
             },
             passwordType: 'password',
@@ -90,7 +86,8 @@ export default {
             loading: false,
             showDialog: false,
             redirect: undefined,
-            otherQuery: {}
+            otherQuery: {},
+            remeber: false,
         }
     },
     watch: {
@@ -103,6 +100,7 @@ export default {
                 }
             },
             immediate: true
+            
         }
     },
     created() {
@@ -145,16 +143,27 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true
-                    this.$store.dispatch('user/login', this.loginForm)
-                        .then(() => {
-                            this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-                            this.loading = false
-                        })
-                        .catch(() => {
-                            this.loading = false
-                        })
+                    // this.$store.dispatch('/login', this.loginForm).then(() => {
+                    //     this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                    //     this.loading = false
+                    // })
+                    // .catch(() => {
+                    //     this.loading = false
+                    // })
+                    ajax.login(this.loginForm).then((res) =>{
+                        if (res.code === 1) {
+                            const token = res.data.token;
+                            const expires = res.data.expires;
+                            this.$store.dispatch('setToken', { token, expires }).then(() => {
+                                this.$router.push('/');
+                            })
+                        }
+                        else {
+                            this.$message.error(res.message);
+                        }
+                        this.loading = false;
+                    })
                 } else {
-                    window.console.log('error submit!!')
                     return false
                 }
             })
@@ -166,6 +175,14 @@ export default {
                 }
                 return acc
             }, {})
+        },
+        toRemeber(value) {
+            if (value) {
+                // 
+            }
+            else {
+                // 
+            }
         }
     }
 }

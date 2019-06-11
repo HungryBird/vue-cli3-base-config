@@ -1,10 +1,10 @@
 const actions = {
-    setToken(_vuex, data) {
+    setToken({commit}, data) {
         return new Promise((resolve) => {
-            _vuex.commit('setToken', data);
+            commit('setToken', data);
             resolve();
         })
-    }
+    },
 }
 
 export default actions;

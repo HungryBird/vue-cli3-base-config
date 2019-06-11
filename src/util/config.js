@@ -1,11 +1,17 @@
+const http = require('http');
+const https = require('https');
+const Qs = require('qs');
+
 let serverIp = '';
 let port = '';
 
 if (process.env.NODE_ENV === 'development') {
-    serverIp = 'localhost'
+    serverIp = 'http://localhost';
+    port = '8080';
 }
 else if (process.env.NODE_ENV === 'production'){
-    serverIp = 'demo'
+    serverIp = 'demo';
+    port = '';
 }
 
 export const baseConfig = {
@@ -29,20 +35,21 @@ export const baseConfig = {
     }],
   
     // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
-    transformResponse: [function (data) {
-      // 对 data 进行任意转换处理
-  
-      return data;
-    }],
+    // transformResponse: [function (data) {
+    //   // 对 data 进行任意转换处理
+    //   return data;
+    // }],
   
     // `headers` 是即将被发送的自定义请求头
-    headers: {'X-Requested-With': 'XMLHttpRequest'},
+    // X-Requested-With为XMLHttpRequest时是ajax请求或者为传统的同步请求
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
   
     // `params` 是即将与请求一起发送的 URL 参数
     // 必须是一个无格式对象(plain object)或 URLSearchParams 对象
-    params: {
-      ID: 12345
-    },
+    params: {},
   
     // `paramsSerializer` 是一个负责 `params` 序列化的函数
     // (e.g. https://www.npmjs.com/package/qs, http://api.jquery.com/jquery.param/)
@@ -56,22 +63,20 @@ export const baseConfig = {
     // - string, plain object, ArrayBuffer, ArrayBufferView, URLSearchParams
     // - 浏览器专属：FormData, File, Blob
     // - Node 专属： Stream
-    data: {
-      firstName: 'Fred'
-    },
+    data: {},
   
     // `timeout` 指定请求超时的毫秒数(0 表示无超时时间)
     // 如果请求话费了超过 `timeout` 的时间，请求将被中断
-    timeout: 1000,
+    timeout: 10000,
   
     // `withCredentials` 表示跨域请求时是否需要使用凭证
     withCredentials: false, // 默认的
   
     // `adapter` 允许自定义处理请求，以使测试更轻松
     // 返回一个 promise 并应用一个有效的响应 (查阅 [response docs](#response-api)).
-    adapter: function (config) {
-      /* ... */
-    },
+    // adapter: function (config) {
+    //   /* ... */
+    // },
   
     // `auth` 表示应该使用 HTTP 基础验证，并提供凭据
     // 这将设置一个 `Authorization` 头，覆写掉现有的任意使用 `headers` 设置的自定义 `Authorization`头
@@ -90,14 +95,14 @@ export const baseConfig = {
     xsrfHeaderName: 'X-XSRF-TOKEN', // 默认的
   
     // `onUploadProgress` 允许为上传处理进度事件
-    onUploadProgress: function (progressEvent) {
-      // 对原生进度事件的处理
-    },
+    // onUploadProgress: function (progressEvent) {
+    //   // 对原生进度事件的处理
+    // },
   
     // `onDownloadProgress` 允许为下载处理进度事件
-    onDownloadProgress: function (progressEvent) {
-      // 对原生进度事件的处理
-    },
+    // onDownloadProgress: function (progressEvent) {
+    //   // 对原生进度事件的处理
+    // },
   
     // `maxContentLength` 定义允许的响应内容的最大尺寸
     maxContentLength: 2000,
@@ -119,17 +124,17 @@ export const baseConfig = {
     // 'proxy' 定义代理服务器的主机名称和端口
     // `auth` 表示 HTTP 基础验证应当用于连接代理，并提供凭据
     // 这将会设置一个 `Proxy-Authorization` 头，覆写掉已有的通过使用 `header` 设置的自定义 `Proxy-Authorization` 头。
-    proxy: {
-      host: '127.0.0.1',
-      port: 9000,
-      auth: : {
-        username: 'mikeymike',
-        password: 'rapunz3l'
-      }
-    },
+    // proxy: {
+    //   host: '127.0.0.1',
+    //   port: 9000,
+    //   auth: {
+    //     username: 'mikeymike',
+    //     password: 'rapunz3l'
+    //   }
+    // },
   
     // `cancelToken` 指定用于取消请求的 cancel token
     // （查看后面的 Cancellation 这节了解更多）
-    cancelToken: new CancelToken(function (cancel) {
-    })
+    // cancelToken: new CancelToken(function (cancel) {
+    // })
   }

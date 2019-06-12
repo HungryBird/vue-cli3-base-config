@@ -22,6 +22,16 @@ const routes = [
                 name: 'yygl',
                 component: () => import('@/pages/yygl/index')
             },
+            {
+                path: '/yggl',
+                name: 'yggl',
+                component: () => import('@/pages/yggl/index')
+            },
+            {
+                path: '/wdrw',
+                name: 'wdrw',
+                component: () => import('@/pages/wdrw/index')
+            },
         ]
     },
     {

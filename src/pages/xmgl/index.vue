@@ -1,6 +1,6 @@
 <template>
     <div>
-        主页
+        项目管理
     </div>
 </template>
 

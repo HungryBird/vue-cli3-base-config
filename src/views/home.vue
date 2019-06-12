@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div>
-            这是主页
-        </div>
+        <Menu :activeIndex="activeIndex"></Menu>
         <div>
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive" />
@@ -13,8 +11,21 @@
 </template>
 
 <script>
-export default {
+import Menu from '@/components/menu/index'
 
+export default {
+    name: 'home',
+    components: {
+        Menu,
+    },
+    data() {
+        return {
+            activeIndex: 'home',
+        }
+    },
+    methods: {
+        // 
+    }
 }
 </script>
 

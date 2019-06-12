@@ -12,6 +12,16 @@ const routes = [
                 name: 'dash',
                 component: () => import('@/pages/dash/index')
             },
+            {
+                path: '/xmgl',
+                name: 'xmgl',
+                component: () => import('@/pages/xmgl/index')
+            },
+            {
+                path: '/yygl',
+                name: 'yygl',
+                component: () => import('@/pages/yygl/index')
+            },
         ]
     },
     {

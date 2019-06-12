@@ -1,6 +1,6 @@
 <template>
     <div>
-        主页
+        医院管理
     </div>
 </template>
 

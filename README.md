@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # xcpdxg
 
 ## Project setup
@@ -31,4 +30,3 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 =======
 # vue-cli3-base-config
 vue-cli3+axios+vuex+vue-router+element
->>>>>>> 89bdc2842545c04c9407318996e0bc4ccfdbffa2

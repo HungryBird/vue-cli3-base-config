@@ -6,8 +6,8 @@ const mutations = {
         setToken(data.token, data.expires);
     },
     setUser(_state, data) {
-        _state.user = data.user;
-        setSession('user', data.user);
+        _state.user = data;
+        setSession('user', data);
     }
 }
 

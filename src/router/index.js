@@ -26,8 +26,8 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         document.title = '登录';
     }
     else {
-        const id = store.getters.getId;
-        if (!id) {
+        const yhid = store.getters.getUser.yhid;
+        if (!yhid) {
             next('/login');
         }
         else {

@@ -151,11 +151,15 @@ export default {
                     //     this.loading = false
                     // })
                     ajax.login(this.loginForm).then((res) =>{
-                        if (res.code === 200) {
-                            const user = res.data.user;
+                        console.log('res: ', res);
+                        if (res.errcode === 200) {
+                            const user = res.user;
                             // const expires = res.data.expires;
-                            this.$store.dispatch('setUser', { user }).then(() => {
+                            this.$store.dispatch('setUser', user).then(() => {
                                 this.$router.push('/');
+                                this.$message.success(res.message);
+                            }).catch((err) => {
+                                console.error('登录失败！' + toString(err));
                             })
                         }
                         else {

@@ -8,7 +8,7 @@ const actions = {
     setUser({commit}, data) {
         return new Promise((resolve) => {
             commit('setUser', data);
-            resolve;
+            resolve();
         })
     }
 }

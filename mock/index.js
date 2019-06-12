@@ -5,20 +5,20 @@ const errcode = 200;
 
 const login = () => { 
     const yhid = Random.natural();
-    const yhsj = Random.integer(9);
+    const yhsj = Random.natural(11);
     const yhxm = Random.cname();
 
     // const expires = Random.integer(1, 9);
-    const data = {
+    const user = {
         yhid,
         yhsj,
         yhxm,
         // expires,
-        message: '登陆成功',
     }
     return {
         errcode, 
-        data,
+        user,
+        message: '登陆成功',
     }
 }
 

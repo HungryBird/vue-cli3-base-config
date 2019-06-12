@@ -2,6 +2,17 @@ const routes = [
     {
         path: '/',
         component: () => import('@/views/home'),
+        children: [
+            {
+                path: '/',
+                redirect: 'dash'
+            },
+            {
+                path: '/dash',
+                name: 'dash',
+                component: () => import('@/pages/dash/index')
+            },
+        ]
     },
     {
         path: '/login',
@@ -17,6 +28,11 @@ const routes = [
         path: '*',
         name: '404',
         component: () => import('@/pages/errPages/404'),
+    },
+    {
+        path: '/401',
+        name: '401',
+        component: () => import('@/pages/errPages/401'),
     }
 ]
 

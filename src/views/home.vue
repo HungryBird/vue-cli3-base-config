@@ -1,6 +1,7 @@
 <template>
     <div>
         <div>
+            这是主页
         </div>
         <div>
             <keep-alive>

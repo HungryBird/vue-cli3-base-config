@@ -1,9 +1,6 @@
 const routes = [
     {
         path: '/',
-        meta: {
-            requireAuto: true,
-        },
         component: () => import('@/views/home'),
     },
     {
@@ -14,11 +11,13 @@ const routes = [
     {
         path: '/home',
         name: 'home',
-        meta: {
-            requireAuto: true,
-        },
         component: () => import('@/views/home'),
     },
+    {
+        path: '*',
+        name: '404',
+        component: () => import('@/pages/errPages/404'),
+    }
 ]
 
 export default routes;

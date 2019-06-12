@@ -15,9 +15,6 @@
         <el-menu-item index="wdrw">
             我的任务
         </el-menu-item>
-        <el-menu-item index="cs">
-            <div>测试</div>
-        </el-menu-item>
         <el-submenu index="sz">
             <template slot="title">设置</template>
             <el-menu-item index="xgmm">修改密码</el-menu-item>
@@ -43,7 +40,6 @@ export default {
     },
     methods: {
         handleSelect(name) {
-            console.log(name)
             if (name === 'tcdl') {
                 removeToken();
                 this.$router.replace('/login');

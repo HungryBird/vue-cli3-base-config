@@ -23,6 +23,7 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
     NProgress.start()
     if (to.path === '/login') {
         next();
+        document.title = '登录';
     }
     else {
         const token = store.getters.getToken;
@@ -32,6 +33,7 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         else {
             next();
         }
+        document.title = '现场盘点相关';
     }
 })
 

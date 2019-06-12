@@ -1,13 +1,15 @@
 <template>
-    <div>
-        <Menu v-model="activeIndex"></Menu>
-        <div>
+    <el-container>
+        <el-header>
+            <Menu v-model="activeIndex"></Menu>
+        </el-header>
+        <el-main>
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive" />
             </keep-alive>
             <router-view v-if="!$route.meta.keepAlive" />
-        </div>
-    </div>
+        </el-main>
+    </el-container>
 </template>
 
 <script>

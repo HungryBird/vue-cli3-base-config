@@ -151,10 +151,10 @@ export default {
                     //     this.loading = false
                     // })
                     ajax.login(this.loginForm).then((res) =>{
-                        if (res.code === 1) {
-                            const token = res.data.token;
-                            const expires = res.data.expires;
-                            this.$store.dispatch('setToken', { token, expires }).then(() => {
+                        if (res.code === 200) {
+                            const user = res.data.user;
+                            // const expires = res.data.expires;
+                            this.$store.dispatch('setUser', { user }).then(() => {
                                 this.$router.push('/');
                             })
                         }

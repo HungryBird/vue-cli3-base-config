@@ -5,6 +5,12 @@ const actions = {
             resolve();
         })
     },
+    setUser({commit}, data) {
+        return new Promise((resolve) => {
+            commit('setUser', data);
+            resolve;
+        })
+    }
 }
 
 export default actions;

@@ -8,7 +8,7 @@ import store from './store/index'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faLock, faEyeSlash, faEye, faMehRollingEyes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import '@/style/index.scss'
+import '@/styles/index.scss'
 require('../mock/index.js')
 
 library.add(faUser, faLock, faEyeSlash, faEye, faMehRollingEyes)

@@ -1,5 +1,5 @@
 <template>
-    <el-container>
+    <el-container style="height: 100%;">
         <el-header>
             <Menu v-model="activeIndex"></Menu>
         </el-header>
@@ -32,7 +32,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+    .el-container{
+        .el-header{
+            padding: 0;
+        }
+    }
 </style>
+
 

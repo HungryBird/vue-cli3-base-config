@@ -149,3 +149,17 @@ export const setStore = ( name, content ) => {
     if (!window.sessionStorage) return
     window.sessionStorage.clear()
 }
+
+/**
+ * 获取时辰
+ */
+ export const getChrono = (hours) => {
+    if(hours < 6) {return '凌晨'} 
+    else if (hours < 9) {return '早上'} 
+    else if (hours < 12) {return '上午'} 
+    else if (hours < 14) {return '中午'} 
+    else if (hours < 17) {return '下午'} 
+    else if (hours < 19) {return '傍晚'} 
+    else if (hours < 22) {return '晚上'} 
+    else {return '夜里'} 
+ }

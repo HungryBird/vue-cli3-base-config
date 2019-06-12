@@ -4,6 +4,7 @@ import routes from '@/router/routes';
 import store from '@/store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
+import { setSession } from '@/util/util'
 
 Vue.use(vueRouter);
 
@@ -20,7 +21,6 @@ const router = new vueRouter({
 
 router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
     NProgress.start()
-
     if (to.path === '/login') {
         next();
     }
@@ -35,7 +35,8 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
     }
 })
 
-router.afterEach(() => {
+router.afterEach((to) => {
+    setSession('activeIndex', to.name);
     NProgress.done()
 })
 

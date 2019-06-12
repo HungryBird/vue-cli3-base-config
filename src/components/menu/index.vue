@@ -1,6 +1,6 @@
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="home">
+    <el-menu :default-active="value" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu-item index="dash">
             主页
         </el-menu-item>
         <el-menu-item index="xmgl">
@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import { removeToken } from '@/util/util'
+import { setSession, removeToken, removeSession, removeStore } from '@/util/util'
 
 export default {
     props: {
-        activeIndex: {
+        value: {
             type: String,
-            default: 'home'
-        },
+            default: 'dash',
+        }
     },
     data() {
         return {
@@ -40,18 +40,27 @@ export default {
     },
     methods: {
         handleSelect(name) {
-            if (name === 'tcdl') {
-                removeToken();
-                this.$router.replace('/login');
+            if (name !== 'tcdl' && name !== 'xgmm') {
+                setSession('activeIndex', name);
+                if (name === 'dash') {
+                    this.$router.replace('/');
+                }
+                else {
+                    this.$router.push(`/${name}`);
+                }
+                this.$emit('input', name);
+                this.$emit('select', name);
             }
-            else if (name === 'xgmm') {
-                // 
-            }
-            else if (name === 'home') {
-                this.$router.replace('/');
-            }
-            else if (name !== 'sz') {
-                this.$router.replace(`/${name}`);
+            else {
+                if (name === 'tcdl') {
+                    removeToken();
+                    removeStore();
+                    removeSession();
+                    this.$router.replace('/login');
+                }
+                else {
+                    // 
+                }
             }
         },
     }

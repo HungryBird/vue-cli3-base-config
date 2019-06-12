@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Menu :activeIndex="activeIndex"></Menu>
+        <Menu v-model="activeIndex"></Menu>
         <div>
             <keep-alive>
                 <router-view v-if="$route.meta.keepAlive" />
@@ -12,6 +12,7 @@
 
 <script>
 import Menu from '@/components/menu/index'
+import { getSession } from '@/util/util'
 
 export default {
     name: 'home',
@@ -20,7 +21,7 @@ export default {
     },
     data() {
         return {
-            activeIndex: 'home',
+            activeIndex: getSession('activeIndex'),
         }
     },
     methods: {

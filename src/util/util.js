@@ -92,7 +92,7 @@ export const setStore = ( name, content ) => {
         try {
             value = JSON.parse(value)
         } catch (e) {
-            return false;
+            // value = value;
         }
     }
     
@@ -130,7 +130,7 @@ export const setStore = ( name, content ) => {
         try {
             value = JSON.parse(value)
         } catch (e) {
-            return false;
+            // value = value;
         }
     }
     return value

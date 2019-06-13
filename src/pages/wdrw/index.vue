@@ -7,6 +7,22 @@
 <script>
 export default {
     name: 'wdrw',
+    data() {
+        return {
+
+        }
+    },
+    computed: {
+        status() {
+            const status = this.$router.query.status;
+            console.log('status: ', status);
+            return status
+        }
+    },
+    methods: {
+
+    },
+
 }
 </script>
 

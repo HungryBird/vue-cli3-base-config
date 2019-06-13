@@ -1,5 +1,4 @@
-import { Random } from '../config'
-const errcode = 200;
+import { Random, errcode } from '../config'
 
 export default [
     // 登录

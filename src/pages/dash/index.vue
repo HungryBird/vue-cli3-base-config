@@ -69,7 +69,6 @@ export default {
             })
         },
         jump(status) {   // 前往我的任务，并且筛选进行中或者待开始任务
-            console.log('jump: ', status);
             this.$router.push({
                 path: '/wdrw',
                 query: {

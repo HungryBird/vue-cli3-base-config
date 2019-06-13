@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faLock, faEyeSlash, faEye, faMehRollingEyes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@/styles/index.scss'
+import filters from '@/filters'
 require('../mock/index.js')
 
 library.add(faUser, faLock, faEyeSlash, faEye, faMehRollingEyes)
@@ -27,4 +28,8 @@ new Vue({
   router,
   store,
 }).$mount('#app')
+
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key])
+})
 

@@ -4,7 +4,7 @@ const getters = {
     },
     getUser(_state) {
         return _state.user;
-    }
+    },
 }
 
 export default getters;

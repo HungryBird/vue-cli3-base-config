@@ -3,17 +3,8 @@
         <el-menu-item index="dash">
             主页
         </el-menu-item>
-        <el-menu-item index="xmgl">
-            项目管理
-        </el-menu-item>
-        <el-menu-item index="yygl">
-            医院管理
-        </el-menu-item>
-        <el-menu-item index="yggl">
-            员工管理
-        </el-menu-item>
-        <el-menu-item index="wdrw">
-            我的任务
+        <el-menu-item v-for="pl in getUser.cd" :key="pl" :index="pl">
+            {{ pl | f_cd }}
         </el-menu-item>
         <el-submenu index="sz">
             <template slot="title">设置</template>
@@ -25,6 +16,7 @@
 
 <script>
 import { setSession, removeToken, removeSession, removeStore } from '@/util/util'
+import { mapGetters } from 'vuex'
 
 export default {
     props: {
@@ -33,9 +25,14 @@ export default {
             default: 'dash',
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUser',
+        ])
+    },
     data() {
         return {
-
+            // 
         }
     },
     methods: {

@@ -142,23 +142,20 @@ export default {
         handleLogin() {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
-                    this.loading = true
-                    // this.$store.dispatch('/login', this.loginForm).then(() => {
-                    //     this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-                    //     this.loading = false
-                    // })
-                    // .catch(() => {
-                    //     this.loading = false
-                    // })
+                    this.loading = true;
+
                     ajax.login(this.loginForm).then((res) =>{
                         console.log('res: ', res);
                         if (res.errcode === 200) {
                             const user = res.user;
-                            // const expires = res.data.expires;
                             this.$store.dispatch('setUser', user).then(() => {
-                                this.$router.push('/');
-                                this.$message.success(res.message);
-                                console.log('login: ', this.$store);
+                                try{
+                                    this.$router.push('/');
+                                    this.$message.success(res.message);
+                                }
+                                catch(err) {
+                                    console.error(err);
+                                }
                             }).catch((err) => {
                                 console.error('登录失败！' + toString(err));
                             })

@@ -14,13 +14,12 @@ export default {
     },
     computed: {
         status() {
-            const status = this.$router.query.status;
-            console.log('status: ', status);
+            const status = this.$route.query.status;
             return status
-        }
+        },
     },
     methods: {
-
+        // 
     },
 
 }

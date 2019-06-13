@@ -163,3 +163,13 @@ export const setStore = ( name, content ) => {
     else if (hours < 22) {return '晚上'} 
     else {return '夜里'} 
  }
+
+ /**
+  * 生成从Min到Max的随机数
+  */
+ export const randomNumber = (Min,Max) => {
+    let Range = Max - Min;
+    let Rand = Math.random();
+    let num = Min + Math.round(Rand * Range); //四舍五入
+    return num;
+}

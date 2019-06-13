@@ -4,7 +4,7 @@ import routes from '@/router/routes';
 import store from '@/store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { setSession } from '@/util/util'
+import { setSession, isEmpty } from '@/util/util'
 
 Vue.use(vueRouter);
 
@@ -26,9 +26,9 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         document.title = '登录';
     }
     else {
-        const yhid = store.getters.getUser.yhid;
-        if (!yhid) {
-            next('/login');
+        const user = store.getters.getUser;
+        if (isEmpty(user) || isEmpty(user.yhid)) {
+            next('/login')
         }
         else {
             next();

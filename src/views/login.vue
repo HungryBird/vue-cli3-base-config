@@ -158,6 +158,7 @@ export default {
                             this.$store.dispatch('setUser', user).then(() => {
                                 this.$router.push('/');
                                 this.$message.success(res.message);
+                                console.log('login: ', this.$store);
                             }).catch((err) => {
                                 console.error('登录失败！' + toString(err));
                             })

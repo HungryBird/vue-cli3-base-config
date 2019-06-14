@@ -6,7 +6,7 @@ const getters = {
         return _state.user;
     },
     getId(_state) {
-        return _state.id;
+        return _state.yhid;
     }
 }
 

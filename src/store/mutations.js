@@ -1,4 +1,4 @@
-import { setToken, setSession } from '@/util/util'
+import { setToken, setSession, removeSession } from '@/util/util'
 import permissionList from '@/router/permissionList'
 import parent from '@/router/parent'
 import router from '@/router'
@@ -20,8 +20,12 @@ const mutations = {
         parent.children = [...asyncRouter, ...parent.children];
         router.addRoutes([parent])
     },
-    initId(_state, id) {
-        _state.id = id;
+    initId(_state, yhid) {
+        _state.yhid = yhid;
+    },
+    loginOut(_state) {
+        removeSession('user');
+        _state.user = {};
     }
 }
 

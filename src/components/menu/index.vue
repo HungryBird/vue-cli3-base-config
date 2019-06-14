@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { setSession, removeToken, removeSession, removeStore } from '@/util/util'
+import { setSession  } from '@/util/util'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -50,10 +50,9 @@ export default {
             }
             else {
                 if (name === 'tcdl') {
-                    removeToken();
-                    removeStore();
-                    removeSession();
-                    this.$router.replace('/login');
+                    this.$store.dispatch('loginOut').then(() => {
+                        this.$router.replace('/login');
+                    })
                 }
                 else {
                     // 

@@ -22,28 +22,33 @@ const router = new vueRouter({
 router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
     NProgress.start()
     const user = store.getters.getUser;
-    if (to.path === '/login') {
-        next();
+    if (isEmpty(user) || isEmpty(user.yhid)) {
+        if (to.name === 'login') {
+            next()
+        }
+        else {
+            next('/login');
+        }
         document.title = '登录';
     }
     else {
-        if (isEmpty(user) || isEmpty(user.yhid)) {
-            next('/login')
+        if (to.name === 'login') {
+            next({path: '/'})
             document.title = '登录';
         }
         else {
             // 当刷新时重新添加动态路由
             if (isEmpty(store.getters.getId)) {
                 store.dispatch('afterRefresh', store.getters.getUser).then(() => {
-                    next()
+                    next(`${to.path}`)  // 重新进入beforeEach
                 })
             }
             else {
-                next();
+                next(); // 跳过beforeEach
             }
         }
-        document.title = '现场盘点相关';
     }
+    document.title = '现场盘点相关';
 })
 
 router.afterEach((to) => {

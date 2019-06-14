@@ -9,14 +9,20 @@ const actions = {
         return new Promise((resolve) => {
             commit('setUser', data);
             commit('setPermissionList', data);
-            commit('initId', data.id);  // 保存id方便判断是否刷新页面
+            commit('initId', data.yhid);  // 保存id方便判断是否刷新页面
             resolve();
         })
     },
     afterRefresh({commit}, data) {  // 刷新之后执行的方法
         return new Promise((resolve) => {
             commit('setPermissionList', data);
-            commit('initId', data.id);
+            commit('initId', data.yhid);
+            resolve();
+        })
+    },
+    loginOut({commit}) {    // 退出登录
+        return new Promise((resolve) => {
+            commit('loginOut');
             resolve();
         })
     }

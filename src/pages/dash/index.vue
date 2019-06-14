@@ -46,7 +46,7 @@ export default {
     },
     mounted() {
         this.setChrono();   // 获取时刻
-        this.getTasks();    // 获取任务数量
+        this.GetDbsx();    // 获取任务数量
     },
     methods: {
         setChrono() {
@@ -57,11 +57,18 @@ export default {
                 self.chrono = getChrono(hours);
             }, 1000);
         },
-        getTasks() {
-            dash.getTasks({}).then((res) => {
-                if (res.errcode === 200) {
-                    this.dclrw = res.data.dclrw.value;
-                    this.jxzrw = res.data.jxzrw.value;
+        GetDbsx() {
+            const yhid = this.$store.getters.getUser.yhid;
+            dash.GetDbsx({yhid}).then((res) => {
+                if (res.code === 1) {
+                    res.data.forEach((item) => {
+                        if (item.state === '1') {
+                            this.dclrw = item.value;
+                        }
+                        else if (item.state === '2') {
+                            this.jxzrw = item.value;
+                        }
+                    })
                 }
                 else {
                     this.$message.error(res.message);

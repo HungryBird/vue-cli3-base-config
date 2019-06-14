@@ -1,4 +1,5 @@
 import { Random, errcode } from '../config'
+import { CheckApi } from '../URL'
 import { } from '@/util/util'
 
 const permissionList = ['xmgl', 'yygl', 'yggl', 'wdrw'];    // 默认需要权限的菜单
@@ -26,7 +27,7 @@ export default [
                 message: '登陆成功',
             }
         },
-        url: '/login',
+        url: `${CheckApi}Login`,
         type: 'post',
     },
 ]

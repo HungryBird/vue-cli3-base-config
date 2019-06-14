@@ -1,22 +1,29 @@
-import { Random, errcode } from '../config'
+import { Random, code } from '../config'
+import { CheckApi } from '../URL'
 
 export default [
     // 获取任务数量
     {
         method() {
             return {
-                data: {
-                    jxzrw: {
+                data: [
+                    {
+                        state: '1',
+                        key: 'wdrw',
+                        label: '待处理任务',
                         value: Random.integer(0, 999)
                     },
-                    dclrw: {
+                    {
+                        state: '2',
+                        key: 'wdrw',
+                        label: '进行中任务',
                         value: Random.integer(0, 999)
-                    }
-                },
-                errcode,
+                    },
+                ],
+                code,
             }
         },
-        url: '/getTasks',
+        url: `${CheckApi}GetDbsx`,
         type: 'get',
     }
 ]

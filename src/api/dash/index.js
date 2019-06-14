@@ -1,7 +1,7 @@
 import { axiosHttp } from '@/util/ajax'
 
 export default {
-    getTasks(option, headers = {}) {
-        return axiosHttp('/getTasks', 'get', option, headers);
+    GetDbsx(option, headers = {}) {
+        return axiosHttp('/api/CheckApi/GetDbsx', 'get', option, headers);
     }
 }

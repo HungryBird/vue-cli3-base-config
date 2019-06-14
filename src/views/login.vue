@@ -143,9 +143,8 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true;
-
-                    ajax.login(this.loginForm).then((res) =>{
-                        console.log('res: ', res);
+                    const { username, password } = this.loginForm;
+                    ajax.Login({username, pwd: password}).then((res) =>{
                         if (res.errcode === 200) {
                             const user = res.user;
                             this.$store.dispatch('loginInit', user).then(() => {

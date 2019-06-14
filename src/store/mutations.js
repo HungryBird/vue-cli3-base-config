@@ -19,6 +19,9 @@ const mutations = {
         })
         parent.children = [...asyncRouter, ...parent.children];
         router.addRoutes([parent])
+    },
+    initId(_state, id) {
+        _state.id = id;
     }
 }
 

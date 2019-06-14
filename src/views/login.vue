@@ -148,7 +148,7 @@ export default {
                         console.log('res: ', res);
                         if (res.errcode === 200) {
                             const user = res.user;
-                            this.$store.dispatch('setUser', user).then(() => {
+                            this.$store.dispatch('loginInit', user).then(() => {
                                 try{
                                     this.$router.push('/');
                                     this.$message.success(res.message);

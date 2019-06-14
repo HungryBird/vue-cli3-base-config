@@ -27,13 +27,20 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         document.title = '登录';
     }
     else {
-        
         if (isEmpty(user) || isEmpty(user.yhid)) {
             next('/login')
             document.title = '登录';
         }
         else {
-            next();
+            // 当刷新时重新添加动态路由
+            if (isEmpty(store.getters.getId)) {
+                store.dispatch('afterRefresh', store.getters.getUser).then(() => {
+                    next()
+                })
+            }
+            else {
+                next();
+            }
         }
         document.title = '现场盘点相关';
     }

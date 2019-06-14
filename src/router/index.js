@@ -22,6 +22,11 @@ const router = new vueRouter({
 router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
     NProgress.start()
     const user = store.getters.getUser;
+    if (to.name !== from.name) {    // 当进入的页面不一样时保存路由信息
+        const { query, params } = to;
+        store.commit('setRouter', {query, params});
+    }
+
     if (isEmpty(user) || isEmpty(user.yhid)) {
         if (to.name === 'login') {
             next()
@@ -39,8 +44,10 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         else {
             // 当刷新时重新添加动态路由
             if (isEmpty(store.getters.getId)) {
-                store.dispatch('afterRefresh', store.getters.getUser).then(() => {
-                    next(`${to.path}`)  // 重新进入beforeEach
+                store.dispatch('afterRefresh', user).then(() => {
+                    const { query, params } = store.getters.getRouter;
+                    // 重新加入query和params
+                    next({path: `${to.path}`, query, params}, )  // 重新进入beforeEach
                 })
             }
             else {

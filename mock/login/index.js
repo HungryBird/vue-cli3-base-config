@@ -1,7 +1,7 @@
 import { Random, errcode } from '../config'
 import { } from '@/util/util'
 
-const permissionList = ['xmgl', 'yygl', 'yggl', 'wdrw'];
+const permissionList = ['xmgl', 'yygl', 'yggl', 'wdrw'];    // 默认需要权限的菜单
 
 export default [
     // 登录

@@ -1,3 +1,28 @@
 a{
     text-decoration: none;
 }
+.slot-button{
+    cursor: pointer;
+}
+.sub-navbar{
+    &::after{
+        clear: both;
+        content: '.';
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+    }
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.pagination-fix{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { baseConfig } from '@/util/config'
-import { toLowerCase } from '@/util/util'
+import { toLowerCase, getSession } from '@/util/util'
 import store from '@/store/index'
 
 export const axiosHttp = (url, type, option, headers = {}) => {
@@ -21,6 +21,7 @@ export const axiosHttp = (url, type, option, headers = {}) => {
     }
     else if (toLowerCase(baseConfig.method) === 'post') {
         // data是对象但是赋值为字符串？还得清空params, 不懂为什么
+        option.yhid = getSession('user').yhid;
         baseConfig.data = JSON.stringify(option)
         // baseConfig.data为json对象
         baseConfig.params = {};

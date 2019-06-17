@@ -1,4 +1,4 @@
-import { Random, errcode } from '../config'
+import { Random, lerrcode } from '../config'
 import { CheckApi } from '../URL'
 import { } from '@/util/util'
 
@@ -22,7 +22,7 @@ export default [
                 // expires,
             }
             return {
-                errcode, 
+                errcode: lerrcode, 
                 user,
                 message: '登陆成功',
             }

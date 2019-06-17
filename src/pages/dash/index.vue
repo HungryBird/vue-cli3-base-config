@@ -4,23 +4,13 @@
             {{ chrono }}好，{{ user.yhxm }}
         </h1>
         <el-row :gutter="20">
-            <el-col :span="12">
-                <el-card class="box-card doing" shadow="hover" @click.native="(e) => jump('jxzrw')">
+            <el-col :span="24/rw.length" v-for="item in rw" :key="item.state">
+                <el-card :class="{'box-card': true, 'doing': item.state === '2', 'wait': item.state === '1'}" @click.native="(e) => jump(item.state)">
                     <div slot="header" class="clearfix">
-                        <span>进行中任务</span>
+                        <span>{{ item.label }}</span>
                     </div>
                     <h1>
-                        {{ jxzrw }}
-                    </h1>
-                </el-card>
-            </el-col>
-            <el-col :span="12">
-                <el-card class="box-card wait" shadow="hover" @click.native="(e) => jump('dclrw')">
-                    <div slot="header" class="clearfix">
-                        <span>待处理任务</span>
-                    </div>
-                    <h1>
-                        {{ dclrw }}
+                        {{ item.value }}
                     </h1>
                 </el-card>
             </el-col>
@@ -40,8 +30,7 @@ export default {
         return {
             user: store.getters.getUser,    // 用户信息
             chrono: '', // 时辰
-            dclrw: 0,  // 待处理任务
-            jxzrw: 0,  // 进行中任务
+            rw: [],
         }
     },
     mounted() {
@@ -61,27 +50,21 @@ export default {
             const yhid = this.$store.getters.getUser.yhid;
             dash.GetDbsx({yhid}).then((res) => {
                 if (res.code === 1) {
-                    res.data.forEach((item) => {
-                        if (item.state === '1') {
-                            this.dclrw = item.value;
-                        }
-                        else if (item.state === '2') {
-                            this.jxzrw = item.value;
-                        }
-                    })
+                    this.rw = res.data;
                 }
                 else {
                     this.$message.error(res.message);
                 }
             })
         },
-        jump(status) {   // 前往我的任务，并且筛选进行中或者待开始任务
+        jump(state) {   // 前往我的任务，并且筛选进行中或者待开始任务
             this.$router.push({
                 path: '/wdrw',
                 query: {
-                    status,
+                    state,
                 }
             })
+            this.$emit('jump', 'wdrw');
         }
     }
 }

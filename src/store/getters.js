@@ -10,6 +10,9 @@ const getters = {
     },
     getRouter(_state) {
         return _state.router;
+    },
+    getActiveIndex(_state) {
+        return _state.activeIndex;
     }
 }
 

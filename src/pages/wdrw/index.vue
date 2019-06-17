@@ -13,9 +13,9 @@ export default {
         }
     },
     computed: {
-        status() {
-            const status = this.$route.query.status;
-            return status
+        state() {
+            const state = this.$route.query.state;
+            return state
         },
     },
     methods: {

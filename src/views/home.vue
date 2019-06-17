@@ -14,7 +14,6 @@
 
 <script>
 import Menu from '@/components/menu/index'
-import { getSession } from '@/util/util'
 
 export default {
     name: 'home',
@@ -23,12 +22,22 @@ export default {
     },
     data() {
         return {
-            activeIndex: getSession('activeIndex'),
+            // activeIndex: store.getters.getActiveIndex,
+        }
+    },
+    computed: {
+        activeIndex: {
+            get() {
+                return this.$store.getters.getActiveIndex;
+            },
+            set(val) {
+                this.$store.commit('setActiveIndex', val);
+            }
         }
     },
     methods: {
         // 
-    }
+    },
 }
 </script>
 

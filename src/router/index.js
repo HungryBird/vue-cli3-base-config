@@ -60,6 +60,7 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
 
 router.afterEach((to) => {
     setSession('activeIndex', to.name);
+    store.commit('setActiveIndex', to.name);
     NProgress.done()
 })
 

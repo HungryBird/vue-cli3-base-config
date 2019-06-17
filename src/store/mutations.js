@@ -32,6 +32,9 @@ const mutations = {
     setRouter(_state, data) {
         _state.router = data;
         setSession('router', data);
+    },
+    setActiveIndex(_state, activeIndex) {
+        _state.activeIndex = activeIndex;
     }
 }
 

@@ -21,7 +21,13 @@ export const axiosHttp = (url, type, option, headers = {}) => {
     }
     else if (toLowerCase(baseConfig.method) === 'post') {
         // data是对象但是赋值为字符串？还得清空params, 不懂为什么
-        option.yhid = getSession('user').yhid;
+        const user = getSession('user');
+        if (user) {
+            if (user.yhid) {
+                const yhid = user.yhid;
+                option.yhid = yhid;
+            }
+        }
         baseConfig.data = JSON.stringify(option)
         // baseConfig.data为json对象
         baseConfig.params = {};

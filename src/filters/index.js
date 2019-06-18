@@ -1,3 +1,5 @@
+import { XM } from '@/enumeration'
+
 export const f_cd = (value) => {
     const obj = {
         'home': '主页',
@@ -9,6 +11,15 @@ export const f_cd = (value) => {
     return obj[value]
 }
 
+export const f_fjzt = (value) => {
+    return XM.FJZT_A.map((item) => {
+        if (item.value == value) {
+            return item.label
+        }
+    })[0];
+}
+
 export default {
     f_cd,
+    f_fjzt,
 }

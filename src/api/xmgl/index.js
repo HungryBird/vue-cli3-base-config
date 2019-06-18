@@ -10,4 +10,7 @@ export default {
     GetXmxq(option, headers = {}) {
         return axiosHttp('/api/Xm/GetXmxq', 'get', option, headers);
     },
+    GetPdSbList(option, headers = {}) {
+        return axiosHttp('/api/Xm/GetPdSbList', 'get', option, headers);
+    },
 }

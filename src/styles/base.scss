@@ -5,6 +5,7 @@ a{
     cursor: pointer;
 }
 .sub-navbar{
+    margin-bottom: 20px;
     &::after{
         clear: both;
         content: '.';

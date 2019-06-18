@@ -1,78 +1,84 @@
 <template>
     <div>
-        <div class="sub-navbar">
-            <el-form class="fl" label-width="80" :inline="true">
-                <el-form-item>
-                    <el-input v-model="searchForm.xmmc" placeholder="项目名称、工作地点、甲方联系人、联系电话、已指派工作人员..." style="width: 480px;">
-                        <i slot="suffix" class="el-input__icon el-icon-close" @click="searchForm.xmmc = ''"></i>
-                        <i slot="prefix" class="el-input__icon el-icon-search slot-button"></i>
-                    </el-input>
-                </el-form-item>
-                <el-form-item label="状态：">
-                    <el-select v-model="searchForm.state">
-                        <el-option v-for="os in options.state" :key="os.value" :value="os.value" :label="os.label">
-                            {{ os.label }}
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="search" :loading="table.loading">
-                        搜索
-                    </el-button>
-                </el-form-item>
-            </el-form>
-            <el-button class="fr" @click="edit('add')">
-                新增
-            </el-button>
+        <div v-if="show">
+            <div class="sub-navbar">
+                <el-form class="fl" label-width="80" :inline="true">
+                    <el-form-item>
+                        <el-input v-model="searchForm.xmmc" placeholder="项目名称、工作地点、甲方联系人、联系电话、已指派工作人员..." style="width: 480px;">
+                            <i slot="suffix" class="el-input__icon el-icon-close" @click="searchForm.xmmc = ''"></i>
+                            <i slot="prefix" class="el-input__icon el-icon-search slot-button"></i>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="状态：">
+                        <el-select v-model="searchForm.state">
+                            <el-option v-for="os in options.state" :key="os.value" :value="os.value" :label="os.label">
+                                {{ os.label }}
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="search" :loading="table.loading">
+                            搜索
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+                <el-button class="fr" @click="edit('add')">
+                    新增
+                </el-button>
+            </div>
+            <el-table style="width: 100%;" :data="table.data" v-loading="table.tableLoading">
+                <el-table-column v-for="tc in table.columns" :key="tc.prop" :prop="tc.prop" :label="tc.label">
+                    <template slot-scope="scope">
+                        <div v-if="tc.prop==='action'">
+                            <el-button @click="edit('edit', scope.row.xmid)" size="mini" type="text">
+                                编辑
+                            </el-button>
+                            <el-button @click="assign(scope.row.xmid, scope.row.pdryid)" size="mini" type="text">
+                                指派
+                            </el-button>
+                            <el-button v-if="scope.row.xmzt == '0'" @click="handle(scope.row)" size="mini" type="text">
+                                处理
+                            </el-button>
+                            <el-button v-if="scope.row.xmzt == '1'" @click="see(scope.row)" size="mini" type="text">
+                                查看
+                            </el-button>
+                            <el-button @click="remove(scope.row.xmid)" size="mini" type="text">
+                                删除
+                            </el-button>
+                        </div>
+                        <div v-else-if="tc.prop === 'gzsj'">
+                            <span>
+                                {{ scope.row.gzkssj }}
+                            </span>
+                            至
+                            <span>
+                                {{ scope.row.gzjssj }}
+                            </span>
+                        </div>
+                        <div v-else-if="tc.prop === 'xmzt'">
+                            {{ scope.row[tc.prop] == 1 ? '已完成' : '未完成' }}
+                        </div>
+                        <div v-else>
+                            {{ scope.row[tc.prop] }}
+                        </div>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-pagination
+                class="pagination-fix"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="searchForm.page"
+                :page-sizes="[10, 20, 30, 40]"
+                :page-size="searchForm.pagesize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="table.total">
+            </el-pagination>
         </div>
-        <el-table style="width: 100%;" :data="table.data" v-loading="table.tableLoading">
-            <el-table-column v-for="tc in table.columns" :key="tc.prop" :prop="tc.prop" :label="tc.label">
-                <template slot-scope="scope">
-                    <div v-if="tc.prop==='action'">
-                        <el-button @click="edit('edit', scope.row.xmid)" size="mini" type="text">
-                            编辑
-                        </el-button>
-                        <el-button @click="assign(scope.row.xmid, scope.row.pdryid)" size="mini" type="text">
-                            指派
-                        </el-button>
-                        <el-button v-if="scope.row.xmzt == '0'" @click="jump(scope.row.xmzt)" size="mini" type="text">
-                            处理
-                        </el-button>
-                        <el-button v-if="scope.row.xmzt == '1'" @click="jump(scope.row.xmzt)" size="mini" type="text">
-                            查看
-                        </el-button>
-                        <el-button @click="remove(scope.row.xmid)" size="mini" type="text">
-                            删除
-                        </el-button>
-                    </div>
-                    <div v-else-if="tc.prop === 'gzsj'">
-                        <span>
-                            {{ scope.row.gzkssj }}
-                        </span>
-                        至
-                        <span>
-                            {{ scope.row.gzjssj }}
-                        </span>
-                    </div>
-                    <div v-else-if="tc.prop === 'xmzt'">
-                        {{ scope.row[tc.prop] == 1 ? '已完成' : '未完成' }}
-                    </div>
-                    <div v-else>
-                        {{ scope.row[tc.prop] }}
-                    </div>
-                </template>
-            </el-table-column>
-        </el-table>
-        <el-pagination
-            class="pagination-fix"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="searchForm.page"
-            :page-sizes="[10, 20, 30, 40]"
-            :page-size="searchForm.pagesize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="table.total">
-        </el-pagination>
+        <see :data="seeForm.form" v-model="seeForm.visible" @go-back="showBase">
+        </see>
+        <!-- <div v-else-if="show === 'handle'">
+        </div> -->
         <!-- 指派 -->
         <el-dialog title="指派工作人员" :visible.sync="assignForm.visible">
             <el-form class="sub-navbar" ref="assignSearch" :inline="true">
@@ -105,9 +111,41 @@
         </el-dialog>
         <!-- 添加编辑 -->
         <el-dialog title="项目信息" :visible.sync="editForm.visible">
-            <el-form :model="editForm.form" ref="editForm">
-                <el-form-item>
-                    
+            <el-form :model="editForm.form" ref="editForm" label-width="100px" :rules="editForm.rules">
+                <el-form-item label="项目名称" prop="xmmc">
+                    <el-input v-model="editForm.form.xmmc" />
+                </el-form-item>
+                <el-form-item label="医院" prop="yymc">
+                    <el-input v-model="editForm.form.yymc" />
+                </el-form-item>
+                <el-form-item label="工作地点" prop="gzdd">
+                    <el-input v-model="editForm.form.gzdd" />
+                </el-form-item>
+                <el-form-item label="工作时间">
+                    <el-col :span="11">
+                        <el-form-item prop="gzkssj">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="editForm.form.gzkssj" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="2" style="text-align: center;">
+                        <span>
+                            -
+                        </span>
+                    </el-col>
+                    <el-col :span="11">
+                        <el-form-item prop="gzjssj">
+                            <el-date-picker type="date" placeholder="选择时间" v-model="editForm.form.gzjssj" style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="甲方联系人" prop="jflxr">
+                    <el-input v-model="editForm.form.jflxr" />
+                </el-form-item>
+                <el-form-item label="联系电话" prop="jflxrdh">
+                    <el-input v-model="editForm.form.jflxrdh" />
+                </el-form-item>
+                <el-form-item label="说明" prop="xmsm">
+                    <el-input type="textarea" v-model="editForm.form.xmsm" />
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -122,14 +160,27 @@
 import xmgl from '@/api/xmgl'
 import yh from '@/api/yh'
 import { XM } from '@/enumeration'
+import See from '@/components/see'
+import paginationMixin from '@/mixins/pagination'
+
 export default {
+    components: {
+        See,
+    },
     data() {
         return {
+            show: true,
+            seeForm: {  // 查看数据
+                visible: false,
+                form: {}
+            },
+            handleForm: {
+                visible: false,
+                form: {}
+            },
             searchForm: {
                 xmmc: '',
-                state: '',
-                page: 1,
-                pagesize: 10,
+                state: '0',
             },
             table: {
                 loading: true,
@@ -212,22 +263,38 @@ export default {
                     xmid: '',
                     action: '',
                     xmmc: '',
-                    // 
+                    yymc: '',
+                    gzdd: '',
+                    gzjssj: '',
+                    gzkssj: '',
+                    jflxr: '',
+                    jflxrdh: '',
+                    xmsm: '',
+                },
+                rules: {
+                    xmmc: [
+                        {required: true, message: '项目名称不能为空'}
+                    ],
+                    yymc: [
+                        {required: true, message: '医院名称不能为空'}
+                    ],
+                    jflxr: [
+                        {required: true, message: '甲方联系人不能为空'}
+                    ],
+                    jflxrdh: [
+                        {required: true, message: '甲方联系人电话不能为空'}
+                    ]
                 }
             },
         }
     },
+    mixins: [paginationMixin],
     mounted() {
         this.search();
     },
     methods: {
-        handleSizeChange(size) {
-            this.searchForm.page = 1;
-            this.searchForm.pagesize = size;
-            this.search();
-        },
-        handleCurrentChange(page) {
-            this.searchForm.page = page;
+        showBase(bool) {
+            this.show = !bool;
             this.search();
         },
         search() {
@@ -293,8 +360,14 @@ export default {
             const selectedArr = this.assignForm.pdryid.split(',');
             return selectedArr.indexOf(row.id) === -1;
         },
-        jump(xmzt) {    // 跳转
-            // 
+        see(data) {    // 跳转
+            this.show = false;
+            this.handleForm.visible = false;
+            this.seeForm.form = data;
+            this.seeForm.visible = true;
+        },
+        handle(data) {  // 处理
+
         },
         remove(xmid) {  // 删除
             this.table.tableLoading = true;
@@ -319,16 +392,18 @@ export default {
                 return row.id;
             }).join(',');
         },
-        EditXm(action) {    // 新增、编辑、指派、删除
+        async EditXm(action = '') {    // 新增、编辑、指派
             let data = {};
-            if (action === 'zp') {
+            if (action === 'zp') {  // 指派
                 this.assignForm.saveLoading = true;
                 data = this.assignForm.form;
             }
             else {
                 Object.assign(data, this.editForm.form);
+                const valid = await this.$refs.editForm.validate();
+                if (!valid) return false;
             }
-            data.action = action;
+            data.action = data.action ? data.action : action;
             xmgl.EditXm(data).then((res) => {
                 if (res.code === 1) {
                     if (res.data.errcode === 0) {
@@ -340,6 +415,7 @@ export default {
                             this.$refs.editForm.resetFields();
                             this.editForm.visible = false;
                         }
+                        this.search();
                         this.$message.success(res.data.errmsg);  
                     }
                     else {

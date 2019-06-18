@@ -30,5 +30,29 @@ export default [
         url: `${Yh}GetDropSelectList`,
         type: 'get',
     },
-
+    // 项目管理-查看：获取盘点人
+    {
+        method(data) {
+            console.log('获取盘点人： ', data)
+            return {
+                "yhlb": [
+                    {
+                        "id": "554",
+                        "yhdh": Random.natural(),
+                        "yhxm": Random.cname(),
+                        "wwxm": Random.cparagraph(),
+                    },
+                    {
+                        "id": "123",
+                        "yhdh": Random.natural(),
+                        "yhxm": Random.cname(),
+                        "wwxm": Random.cparagraph(),
+                    },
+                ],
+                "total": 2,
+            }
+        },
+        url: `${Yh}GetPdSbList `,
+        type: 'get',
+    }
 ]
